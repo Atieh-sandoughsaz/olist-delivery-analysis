@@ -10,7 +10,18 @@ Running notes on the Olist data. These feed the README later.
 - **Every item has a matching product and seller.** The 5-table inner join (orders, customers, order_items, products, sellers) returned 112,650 rows, the same as `order_items`, so nothing was lost.
 - **768 orders have no review.** Inner join `orders` to `order_reviews` returns 99,224 rows. The left join returns 99,992. The difference is the unreviewed orders.
 - **Some orders have more than one review.** The left join returned more rows (99,992) than there are orders (99,441), so a join to `order_reviews` can repeat an order.
+- **97.0% of orders are `delivered`** (96,478 of 99,441). The rest are `shipped` (1,107), `canceled` (625), `unavailable` (609), `invoiced` (314), `processing` (301), `created` (5) and `approved` (2).
+- **8 orders are `delivered` but have no delivery date.** They can't be measured for lateness and are excluded.
+- **About 6 orders have a delivery date but are not `delivered`** (96,476 orders have a date; 96,478 - 8 = 96,470 delivered with a date). For the delay metric, filter on both `order_status = 'delivered'` and a non-empty delivery date.
 
 ## Things to check later
 
-- `order_reviews.review_id` is expected to be unique but may contain duplicates.
+- Decide how to handle orders with more than one review (for example, keep only the latest review per order) before averaging scores. Plan to do this with a CTE in Week 2.
+
+## Checks that came back clean
+
+- No delivered order has a delivery date earlier than its purchase date.
+
+## More data quality
+
+- **`order_reviews.review_id` is not unique.** 99,224 rows but only 98,410 distinct review IDs, so 814 rows repeat an ID. That is why the table has no primary key.
