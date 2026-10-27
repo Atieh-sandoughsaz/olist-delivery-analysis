@@ -14,6 +14,11 @@ Running notes on the Olist data. These feed the README later.
 - **8 orders are `delivered` but have no delivery date.** They can't be measured for lateness and are excluded.
 - **About 6 orders have a delivery date but are not `delivered`** (96,476 orders have a date; 96,478 - 8 = 96,470 delivered with a date). For the delay metric, filter on both `order_status = 'delivered'` and a non-empty delivery date.
 
+## Results
+
+- **Overall late rate is 8.11%.** Of 96,470 delivered orders with a delivery date, 7,826 arrived after the estimated date (delivered date greater than estimated date). Orders in scope: `order_status = 'delivered'` and a non-empty delivery date.
+- **Headline: late orders get much lower review scores.** On-time orders average 4.29 (88,653 review rows), late orders average 2.57 (7,700 review rows), a gap of about 1.7 points. First-pass result using an inner join to `order_reviews`, so it excludes delivered orders with no review and counts orders with several reviews more than once. Re-run with one review per order (CTE) in Week 2. This shows a link, not proof of cause.
+
 ## Things to check later
 
 - Decide how to handle orders with more than one review (for example, keep only the latest review per order) before averaging scores. Plan to do this with a CTE in Week 2.
