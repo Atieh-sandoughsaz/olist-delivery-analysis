@@ -17,7 +17,7 @@ Running notes on the Olist data. These feed the README later.
 ## Results
 
 - **Overall late rate is 8.11%.** Of 96,470 delivered orders with a delivery date, 7,826 arrived after the estimated date (delivered date greater than estimated date). Orders in scope: `order_status = 'delivered'` and a non-empty delivery date.
-- **Headline: late orders get much lower review scores.** On-time orders average 4.29 (88,653 review rows), late orders average 2.57 (7,700 review rows), a gap of about 1.7 points. First-pass result using an inner join to `order_reviews`, so it excludes delivered orders with no review and counts orders with several reviews more than once. Re-run with one review per order (CTE) in Week 2. This shows a link, not proof of cause.
+- **Headline: late orders get much lower review scores.** On-time orders average 4.29 (88,653 review rows), late orders average 2.57 (7,700 review rows), a gap of about 1.7 points. First-pass result used an inner join to `order_reviews`. **Confirmed with a CTE** that averages the reviews to one score per order and left joins from delivered orders: on time 4.29 (88,163 of 88,644 orders have a review), late 2.57 (7,661 of 7,826). The result did not change, so it is robust. 646 delivered orders have no review. This shows a link, not proof of cause.
 
 ## Things to check later
 
