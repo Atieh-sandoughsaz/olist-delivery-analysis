@@ -18,8 +18,11 @@ Running notes on the Olist data. These feed the README later.
 
 - **Overall late rate is 8.11%.** Of 96,470 delivered orders with a delivery date, 7,826 arrived after the estimated date (delivered date greater than estimated date). Orders in scope: `order_status = 'delivered'` and a non-empty delivery date.
 - **Headline: late orders get much lower review scores.** On-time orders average 4.29 (88,653 review rows), late orders average 2.57 (7,700 review rows), a gap of about 1.7 points. First-pass result used an inner join to `order_reviews`. **Confirmed with a CTE** that averages the reviews to one score per order and left joins from delivered orders: on time 4.29 (88,163 of 88,644 orders have a review), late 2.57 (7,661 of 7,826). The result did not change, so it is robust. 646 delivered orders have no review. This shows a link, not proof of cause.
+- **Late rate varies a lot by customer state.** Worst: AL 23.93%, MA 19.67%, PI 15.97%, CE 15.32%, SE 15.22%, all in the north-east. RJ is 13.47% on 12,350 orders. SP, the biggest state, is 5.89% on 40,494 orders. Best: RO 2.88%, AC 3.75%, AM 4.14%, AP 4.48%, but these have few orders (AP 67, AC 80), so apply a minimum order count (for example 100) in rankings.
 
 ## Things to check later
+
+- Why do remote northern states (AM, AC, RO) have low late rates? Possible hypothesis: Olist sets longer estimated delivery dates there. Check the average gap between purchase and estimated date by state.
 
 - Decide how to handle orders with more than one review (for example, keep only the latest review per order) before averaging scores. Plan to do this with a CTE in Week 2.
 
